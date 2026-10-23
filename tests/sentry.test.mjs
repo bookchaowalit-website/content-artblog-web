@@ -38,3 +38,19 @@ test('scrubEvent removes local variables from stack frames', () => {
   assert.equal(frame.function, 'f');
   assert.equal(frame.vars, undefined);
 });
+
+test('scrubEvent drops the request path captureRequestError adds and strips query strings', () => {
+  const event = scrubEvent({
+    transaction: 'GET /search?q=private&token=secret',
+    tags: { url: 'https://example.com/search?q=private', route: '/search?q=private' },
+    contexts: {
+      nextjs: { request_path: '/search?q=private', router_kind: 'App Router', route_type: 'render' },
+      trace: { trace_id: 't' },
+      runtime: { name: 'node' },
+    },
+  });
+  assert.equal(event.transaction, 'GET /search');
+  assert.deepEqual(event.tags, { route: '/search' });
+  assert.deepEqual(event.contexts, { runtime: { name: 'node' } });
+  assert.doesNotMatch(JSON.stringify(event), /private/);
+});
