@@ -17,7 +17,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.14",
     "gray-matter": "^4.0.3",
-    "next": "15.5.27",
+    "next": "15.5.28",
     "next-mdx-remote": "^6.0.0",
     "postcss": "^8.4.24",
     "react": "^19",
@@ -31,7 +31,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.5.27",
+    "eslint-config-next": "15.5.28",
     "typescript": "^5"
+  },
+  "overrides": {
+    "sharp": "^0.35.5"
   }
 }
