@@ -19,7 +19,7 @@ jobs:
     uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-node.yml@87dc5e1c7e0416886a6371d5a101bb2ccba38edd # v1.1.1
     with:
       node-version: "24" # npm 11 wrote the lockfile; npm 10 (Node 22) can fail npm ci on it
-      require-tests: false # no test script yet; SPEC-001 adds the tests and turns this on
+      require-tests: true
       build-command: NEXT_TELEMETRY_DISABLED=1 npm run build
 
   security:
