@@ -8,7 +8,7 @@ A Next.js blog exploring knowledge of various art styles, design techniques, and
 - **MDX** for writing posts with rich content
 - **Tailwind CSS** for styling
 - **Responsive images** and SEO optimization
-- **Tag system** and search functionality
+- **Tags** on each post (no search UI)
 - **Vercel deployment** ready
 
 ## Getting Started
@@ -53,7 +53,11 @@ summary: "Post summary"
 
 ## Deployment
 
-Deploy to Vercel with `vercel.json` configuration.
+Live at https://artblog.bookchaowalit.com (Vercel project `bookchaowalit-artblog-frontend`, deployed by the Vercel CLI; there is no `vercel.json`). `swa-cli.config.json` and `next_function.js` are Azure Static Web Apps config that the Vercel deployment does not use. Pushes to `main` run CI only and do not deploy.
+
+## Checks
+
+`npm run lint`, `npx tsc --noEmit`, `npm test` (frontmatter validation, post loader, Sentry scrubbing) and `npm run build`; CI runs the same on every push.
 
 ## Technologies
 

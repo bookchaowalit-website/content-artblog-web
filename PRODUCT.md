@@ -57,3 +57,35 @@ uses Thai and English.
 
 Use semantic headings, meaningful image alternatives, keyboard-accessible
 navigation, readable line lengths, and language metadata that matches content.
+
+## Current state (2026-10-23)
+
+What it is: a small, public, read-only art and design notebook. Five Thai/English MDX posts in `content/posts/`
+(illustration, colour palettes, composition, graphic design, photography) with tags and read time, a post index
+(`/posts/`), post pages (`/posts/<slug>/`), and eight subject pages (`/arts/<category>/`). For people learning the
+basics of a creative field. No accounts, no comments, no search.
+
+What works today:
+
+- Home, reading room, post pages and subject pages render statically.
+- Every post's frontmatter is checked (title, summary, author, read time, cover image, real `YYYY-MM-DD` date,
+  non-empty tags); a broken post fails the build (`lib/mdx.ts`, `tests/frontmatter.test.mjs`).
+- Errors are reported to Sentry (project `content-artblog-web`) when `NEXT_PUBLIC_SENTRY_DSN` is set, errors only and
+  with request, user, query strings and request paths stripped (`lib/sentry.ts`).
+- CI on every push: lint, typecheck, tests, build and the shared security scan.
+
+What does not work or is not true yet:
+
+- There is no search UI (the earlier README claimed one).
+- `/api/mcp` is a stub: its tools answer with empty results and a "implement … here" message.
+- Subject pages render their body as raw Markdown text (`#`, `**` visible) from inline strings in
+  `app/arts/[category]/page.tsx`, not through the MDX pipeline.
+- Post author is the placeholder "ชื่อผู้เขียน" and cover image paths point to files that do not exist (the page
+  draws its own artwork instead).
+- No product analytics: Vercel Web Analytics and Speed Insights components are mounted, but no custom events exist and
+  no KPI baseline has been captured (see `docs/measurement/KPI-PLAN.md`).
+
+Live and deploy state: https://artblog.bookchaowalit.com (Vercel project `bookchaowalit-artblog-frontend`). The Next.js
+security patch build was deployed by CLI on 2026-10-23 (D9a). The Vercel project is still linked to the old repository
+name, so pushes to `main` do not deploy; later changes (tests, Sentry, the 375px subject-index fix) reach the live site
+only after the owner reconnects Vercel Git (D9) or approves another CLI deploy.
