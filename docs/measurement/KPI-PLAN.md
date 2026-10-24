@@ -1,6 +1,6 @@
 ---
 title: "Creative Arts Knowledge (artblog) — KPI and Instrumentation Plan"
-status: draft
+status: approved
 created: 2026-10-23
 updated: 2026-10-23
 description: "How artblog's reading outcomes would be measured, which events are planned, and what is live today (Sentry errors only)."
@@ -14,10 +14,10 @@ template: architecture-docs templates/sdlc/kpi-and-instrumentation-plan.md
 | Field | Value |
 |---|---|
 | Product | bookchaowalit-website/content-artblog-web (https://artblog.bookchaowalit.com) |
-| Version / status | 0.1 / **draft** — definitions only; no product analytics is live, no baseline captured |
+| Version / status | 0.1 / **approved** (2026-10-24) — definitions only; no product analytics is live, no baseline captured |
 | Metric owner | Owner (bookchaowalit) |
 | AI maker | Claude Code (b-tier-b session, 2026-10-23) |
-| AI reviewer | not yet reviewed |
+| AI reviewer | independent Claude reviewer subagent (`solo:solo-reviewer`, Sonnet, read-only, no maker context), 2026-10-24: approved (see Approval) |
 | Analytics source of truth | planned: PostHog free tier (owner decision D4: chosen, but no account or project key yet). Live today: Sentry errors only (project `content-artblog-web`). Vercel Web Analytics/Speed Insights components are mounted in `app/layout.tsx`, but no custom events exist and whether Web Analytics is enabled on the Vercel project is not verified |
 | Dashboard | none yet |
 | Next review | 2026-11-15 (Big Loop milestone M1) |
@@ -86,3 +86,12 @@ Privacy and data rules:
 | Date | KPI ID | Change | Reason | Baseline restated? | Approved by |
 |---|---|---|---|---|---|
 | 2026-10-23 | all | First draft | Big Loop L3 | no | pending owner |
+
+## Approval (2026-10-24)
+
+| Field | Value |
+|---|---|
+| Checker | independent Claude reviewer subagent (`solo:solo-reviewer`, Sonnet, read-only, no maker context) |
+| Approver | AI approval under the owner's process (approvals by the owner or AI with evidence; maker and checker are different agents). Recorded by Claude session oa-remainder on the owner's instruction "ทำที่เหลือให้หน่อย" (2026-10-24) |
+| Verdict | **approved** |
+| Evidence | lib/sentry.ts + tests/sentry.test.mjs; layout mounts Analytics/SpeedInsights (plan says enablement unverified); app/arts, app/posts; no custom events. |
