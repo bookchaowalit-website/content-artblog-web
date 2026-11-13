@@ -33,3 +33,7 @@ build/
 
 .env
 .vercel
+
+# Storybook
+storybook-static/
+*storybook.log
