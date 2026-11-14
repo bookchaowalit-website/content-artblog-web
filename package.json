@@ -46,6 +46,9 @@
     },
     "@typescript-eslint/typescript-estree": {
       "minimatch": "^11.0.4"
+    },
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.6"
     }
   }
 }
