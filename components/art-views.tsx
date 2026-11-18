@@ -44,7 +44,7 @@ export const mdxComponents = {
 /** "5 min" → "อ่าน 5 นาที"; anything else is shown as written. */
 export const readTime = (value: string) => value.replace(/^(\d+)\s*min$/, "อ่าน $1 นาที");
 
-export const postEntry = (post: Post): Entry => ({ href: `/posts/${post.slug}/`, title: post.title, summary: post.summary, date: post.date, meta: [readTime(post.readTime)], tags: post.tags });
+export const postEntry = (post: Post, tag = ""): Entry => ({ href: `/posts/${post.slug}/${tag ? `?${new URLSearchParams({ tag })}` : ""}`, title: post.title, summary: post.summary, date: post.date, meta: [readTime(post.readTime)], tags: post.tags });
 export const subjectEntry = (subject: Subject): Entry => ({ href: `/arts/${subject.id}/`, title: subject.title, summary: subject.definition });
 
 const postsHref = (tag = "") => (tag ? `/posts/?${new URLSearchParams({ tag })}` : "/posts/");
@@ -65,7 +65,7 @@ export function HomeView({ posts, subjects }: { posts: Post[]; subjects: Subject
         {posts.length === 0 ? (
           <EmptyState headingLevel={3} title="ยังไม่มีบทความ">บทความใหม่จะแสดงที่นี่เมื่อเผยแพร่</EmptyState>
         ) : (
-          <EntryList headingLevel={3} entries={posts.slice(0, 3).map(postEntry)} />
+          <EntryList headingLevel={3} entries={posts.slice(0, 3).map((post) => postEntry(post))} />
         )}
       </section>
       <section aria-labelledby="subjects">
@@ -99,20 +99,23 @@ export function PostsView({ posts, tag = "" }: { posts: Post[]; tag?: string }) 
             />
             <p className="rs-count" role="status">{current ? `แสดง ${shown.length} จาก ${posts.length} บทความ ในหัวข้อ “${current}”` : `${posts.length} บทความ`}</p>
           </div>
-          <EntryList entries={shown.map(postEntry)} />
+          <EntryList entries={shown.map((post) => postEntry(post, current))} />
         </>
       )}
     </ArtFrame>
   );
 }
 
-export function PostView({ post, posts, children }: { post: Post; posts: Post[]; children: ReactNode }) {
-  const { previous, next } = neighbours(posts, posts.findIndex((p) => p.slug === post.slug));
-  const link = (p: Post | undefined, label: string): PagerLink | undefined => (p ? { href: `/posts/${p.slug}/`, title: p.title, label } : undefined);
+/** A post. Opened from a tag (?tag=), Back returns to that tag and previous / next stay inside it. */
+export function PostView({ post, posts, tag = "", children }: { post: Post; posts: Post[]; tag?: string; children: ReactNode }) {
+  const current = post.tags.includes(tag) ? tag : "";
+  const list = current ? posts.filter((p) => p.tags.includes(current)) : posts;
+  const { previous, next } = neighbours(list, list.findIndex((p) => p.slug === post.slug));
+  const link = (p: Post | undefined, label: string): PagerLink | undefined => (p ? { href: postEntry(p, current).href, title: p.title, label } : undefined);
   return (
     <ArtFrame current="posts">
       <article className="rs-article">
-        <ArticleHeader back={{ href: "/posts/", label: "บทความทั้งหมด" }} tags={post.tags} title={post.title} lede={post.summary} date={post.date} meta={[readTime(post.readTime), post.author]} />
+        <ArticleHeader back={current ? { href: postsHref(current), label: `หัวข้อ “${current}”` } : { href: "/posts/", label: "บทความทั้งหมด" }} tags={post.tags} title={post.title} lede={post.summary} date={post.date} meta={[readTime(post.readTime), post.author]} />
         <Prose>{children}</Prose>
         <Pager previous={link(previous, "ก่อนหน้า")} next={link(next, "ถัดไป")} label="บทความอื่น" />
       </article>

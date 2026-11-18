@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { HomeView, PostsView, SubjectsView, mdxComponents, readTime } from "@/components/art-views";
+import { HomeView, PostView, PostsView, SubjectsView, mdxComponents, readTime } from "@/components/art-views";
 import { renderMdx } from "@/lib/render-mdx";
 import type { Post } from "@/lib/mdx";
 import { SUBJECTS } from "@/lib/subjects";
@@ -93,6 +93,28 @@ describe("subjects", () => {
     }
     expect(await artRoute.generateMetadata({ params: Promise.resolve({ category: "missing" }) })).toEqual({});
     await expect(ArtPage({ params: Promise.resolve({ category: "missing" }) })).rejects.toThrow();
+  });
+});
+
+describe("follow-ups", () => {
+  it("keeps the tag on post pages: links, Back and previous / next", async () => {
+    const list = page(<PostsView posts={sample} tag="Design" />);
+    expect(list.querySelector(".rs-entry-link")?.getAttribute("href")).toBe("/posts/b/?tag=Design");
+    const view = page(<PostView post={sample[1]} posts={sample} tag="Design">body</PostView>);
+    expect(view.querySelector(".rs-back")?.getAttribute("href")).toBe("/posts/?tag=Design");
+    expect(view.querySelector('.rs-pager a[rel="next"]')?.getAttribute("href")).toBe("/posts/a/?tag=Design");
+    expect(view.querySelector('.rs-pager a[rel="prev"]')).toBeNull();
+    const plain = page(<PostView post={sample[1]} posts={sample} tag="Nope">body</PostView>);
+    expect(plain.querySelector(".rs-back")?.getAttribute("href")).toBe("/posts/");
+    const real = page(await PostPage({ params: Promise.resolve({ slug: "2025-12-07-color-palettes" }), searchParams: Promise.resolve({ tag: ["Illustration"] }) }));
+    expect(real.querySelector(".rs-back")?.getAttribute("href")).toBe("/posts/?tag=Illustration");
+  });
+
+  it("gives each post and subject its own share URL", async () => {
+    const post = await postRoute.generateMetadata({ params: Promise.resolve({ slug: "2025-12-07-color-palettes" }) });
+    expect(post.openGraph).toMatchObject({ url: "https://artblog.bookchaowalit.com/posts/2025-12-07-color-palettes/", type: "article" });
+    const subject = await artRoute.generateMetadata({ params: Promise.resolve({ category: "typography" }) });
+    expect(subject.openGraph).toMatchObject({ url: "https://artblog.bookchaowalit.com/arts/typography/", title: "Typography" });
   });
 });
 

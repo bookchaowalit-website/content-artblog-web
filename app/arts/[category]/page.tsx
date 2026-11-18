@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SubjectView } from "@/components/art-views";
+import { SITE, SubjectView } from "@/components/art-views";
 import { renderMdx } from "@/lib/render-mdx";
 import { SUBJECTS, subjectById } from "@/lib/subjects";
 
@@ -13,7 +13,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const subject = subjectById((await params).category);
-  return subject ? { title: subject.title, description: subject.definition, alternates: { canonical: `/arts/${subject.id}/` } } : {};
+  if (!subject) return {};
+  // Each subject shares as itself (layout.tsx sets the home page's Open Graph data).
+  return {
+    title: subject.title,
+    description: subject.definition,
+    alternates: { canonical: `/arts/${subject.id}/` },
+    openGraph: { type: "article", locale: "th_TH", url: `${SITE}/arts/${subject.id}/`, title: subject.title, description: subject.definition, siteName: "Creative Arts Knowledge" },
+    twitter: { card: "summary", title: subject.title, description: subject.definition },
+  };
 }
 
 export default async function ArtPage({ params }: PageProps) {
