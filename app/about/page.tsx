@@ -1,70 +1,33 @@
-import Link from 'next/link'
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArtFrame } from "@/components/art-views";
+import { Prose, ReaderHead } from "@/components/reader-shell";
+
+export const metadata: Metadata = { title: "เกี่ยวกับ", description: "Creative Arts Knowledge คืออะไร เขียนให้ใคร และติดต่อได้ทางไหน", alternates: { canonical: "/about/" } };
 
 export default function AboutPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">เกี่ยวกับ Creative Arts Knowledge</h1>
-        <p className="text-xl text-gray-600">
-          แหล่งรวบรวมความรู้เกี่ยวกับศิลปะและงานสร้างสรรค์
-        </p>
-      </div>
-
-      <div className="prose prose-lg prose-gray max-w-none">
+    <ArtFrame current="about">
+      <ReaderHead title="เกี่ยวกับ Creative Arts Knowledge" lede="สมุดโน้ตรวบรวมความรู้เรื่องศิลปะและงานสร้างสรรค์" />
+      <Prose>
         <h2>จุดประสงค์</h2>
-        <p>
-          Creative Arts Knowledge ถูกสร้างขึ้นเพื่อเป็นแหล่งรวบรวมความรู้ที่ครบถ้วน
-          เกี่ยวกับศิลปะและงานสร้างสรรค์ต่างๆ โดยมุ่งเน้นให้ความรู้ที่เป็นประโยชน์
-          สำหรับทั้งผู้เริ่มต้นและผู้ที่มีประสบการณ์
-        </p>
-
-        <h2>สิ่งที่คุณจะพบ</h2>
+        <p>รวบรวมความรู้พื้นฐานเรื่องศิลปะและงานสร้างสรรค์ไว้ในที่เดียว ให้ทั้งผู้เริ่มต้นและผู้ที่มีประสบการณ์หยิบไปใช้ได้</p>
+        <h2>สิ่งที่มีในเว็บนี้</h2>
         <ul>
-          <li><strong>คำจำกัดความที่ชัดเจน</strong> — อธิบายแต่ละสาขาศิลปะอย่างละเอียด</li>
-          <li><strong>เทคนิคและวิธีการ</strong> — แนวทางปฏิบัติที่สามารถนำไปใช้ได้จริง</li>
-          <li><strong>เครื่องมือแนะนำ</strong> — ซอฟต์แวร์และอุปกรณ์ที่เหมาะสม</li>
-          <li><strong>ตัวอย่างงาน</strong> — ผลงานและกรณีศึกษา</li>
-          <li><strong>ข้อมูลอุตสาหกรรม</strong> — แนวโน้มและโอกาสในสายงาน</li>
+          <li><strong>คำจำกัดความ</strong>: อธิบายแต่ละสาขาศิลปะ (<Link href="/categories/">สาขาศิลปะ</Link>)</li>
+          <li><strong>เทคนิคและวิธีการ</strong>: แนวทางที่นำไปลองทำได้ (<Link href="/posts/">บทความ</Link>)</li>
+          <li><strong>เครื่องมือแนะนำ</strong>: ซอฟต์แวร์และอุปกรณ์ที่ใช้ในแต่ละสาขา</li>
         </ul>
-
         <h2>สำหรับใคร</h2>
-        <p>
-          เว็บไซต์นี้เหมาะสำหรับทุกคนที่สนใจศิลปะและงานสร้างสรรค์ ไม่ว่าจะเป็น:
-        </p>
         <ul>
           <li>นักเรียนและนักศึกษา</li>
-          <li>มืออาชีพที่ต้องการอัพเดทความรู้</li>
-          <li>ผู้ที่กำลังมองหาอาชีพในวงการศิลปะ</li>
-          <li>ผู้ที่ชื่นชอบศิลปะและต้องการเรียนรู้เพิ่มเติม</li>
+          <li>มืออาชีพที่อยากทบทวนพื้นฐาน</li>
+          <li>คนที่กำลังมองหาเส้นทางในงานศิลปะ</li>
+          <li>คนที่ชอบศิลปะและอยากเรียนรู้เพิ่ม</li>
         </ul>
-
-        <h2>การมีส่วนร่วม</h2>
-        <p>
-          หากคุณมีคำแนะนำ ข้อมูลเพิ่มเติม หรือต้องการแบ่งปันความรู้
-          สามารถติดต่อเราได้ผ่านช่องทางต่างๆ
-        </p>
-
-        <h2>ติดต่อเรา</h2>
-        <p>
-          มีคำถามหรือข้อเสนอแนะ? ติดต่อเราได้ที่:
-        </p>
-        <ul>
-          <li>Email: contact@creativearts.com</li>
-          <li>Social Media: ติดตามเราในช่องทางโซเชียลมีเดีย</li>
-        </ul>
-      </div>
-
-      <div className="text-center mt-12">
-        <Link
-          href="/"
-          className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          กลับหน้าหลัก
-        </Link>
-      </div>
-    </div>
-  )
+        <h2>ติดต่อ</h2>
+        <p>มีคำแนะนำหรือพบข้อผิดพลาด ติดต่อผ่าน <a href="https://bookchaowalit.com/">bookchaowalit.com</a> หรือเปิด issue ที่ <a href="https://github.com/bookchaowalit-website/content-artblog-web/issues">รีโพของเว็บนี้</a></p>
+      </Prose>
+    </ArtFrame>
+  );
 }

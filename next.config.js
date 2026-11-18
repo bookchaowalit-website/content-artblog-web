@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+    pageExtensions: ["js", "jsx", "ts", "tsx"],
     trailingSlash: true,
     images: {
         unoptimized: true,
@@ -8,6 +8,10 @@ const nextConfig = {
     // /api/mcp is called cross-origin from bookchaowalit-devhub-frontend's
     // Playground. Without this, the browser blocks reading the response
     // even though the route itself works — see devhub's PRODUCT.md.
+    async redirects() {
+        // The old per-app portfolio list now lives on the main site (permanent: Next answers 308).
+        return [{ source: '/more-projects', destination: 'https://bookchaowalit.com/', permanent: true }];
+    },
     async headers() {
         // trailingSlash: true above means requests normalize to /api/mcp/ —
         // matching both so the header applies regardless of redirect order.
@@ -32,12 +36,4 @@ const nextConfig = {
     },
 };
 
-const withMDX = require("@next/mdx")({
-    extension: /\.mdx?$/,
-    options: {
-        remarkPlugins: [require("remark-gfm")],
-        rehypePlugins: [require("rehype-highlight")],
-    },
-});
-
-module.exports = withMDX(nextConfig);
+module.exports = nextConfig;

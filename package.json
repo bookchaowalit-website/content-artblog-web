@@ -6,49 +6,40 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs && vitest run --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@mdx-js/loader": "^3.0.0",
-    "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^15.5.9",
     "@sentry/nextjs": "^11.8.0",
-    "@tailwindcss/typography": "^0.5.9",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
-    "autoprefixer": "^10.4.14",
     "gray-matter": "^4.0.3",
-    "next": "15.5.28",
+    "next": "16.4.5",
     "next-mdx-remote": "^6.0.0",
-    "postcss": "^8.4.24",
     "react": "^19",
     "react-dom": "^19",
     "rehype-highlight": "^7.0.2",
-    "remark-gfm": "^4.0.1",
-    "tailwindcss": "^3.3.0"
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "15.5.28",
-    "typescript": "^5"
+    "@vitest/coverage-v8": "^5.1.1",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.5",
+    "happy-dom": "^21.0.4",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5",
+    "vitest": "^5.1.1"
   },
   "overrides": {
     "sharp": "^0.35.5",
-    "next": {
-      "postcss": "^8.5.25"
-    },
     "@sentry/bundler-plugins": {
       "glob": "^14.0.3"
     },
     "@typescript-eslint/typescript-estree": {
       "minimatch": "^11.0.4"
-    },
-    "@tailwindcss/typography": {
-      "postcss-selector-parser": "^6.1.6"
     }
   }
 }

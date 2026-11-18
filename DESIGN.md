@@ -1,27 +1,16 @@
-# Creative Arts Knowledge — Design direction
+# Design
 
-## Direction
+Since 2026-11-19 Creative Arts Knowledge uses the shared Reader shell (see `READER.md`): the `--rs-*`
+tokens in `app/reader-shell.css` (light and dark, WCAG 2.2 AA), 44px targets, one h1 per page and a
+forced-colors fallback. The earlier field-notebook look (Playfair Display + Space Mono with no Thai
+glyphs, 10–11px uppercase labels, 16px nav targets, a full-screen hero artwork on phones) is retired.
 
-Assigned read-mode direction translated into a field-notes editorial index:
-the home is a working notebook, subjects are an index, and posts are the
-reading room.
-
-## Visual system
-
-- Warm paper, black ink, graphite rules, and one signal red used like a print
-  correction mark.
-- Playfair Display carries article titles; Space Mono carries dates, indexes,
-  and navigation labels.
-- Editorial spreads, ledger rows, image plates, and quiet negative space replace
-  gradient heroes and generic content cards.
-
-## Interaction contract
-
-The category index, featured note, latest notes, reading-room cards, and post
-metadata remain linked to the existing MDX content. Images keep meaningful
-alt handling without inventing captions or claims.
-
-## Responsive behavior
-
-The split editorial hero becomes a single reading column; subject rows become a
-two-column index and post metadata collapses without hiding the title or action.
+- **Language:** the content is Thai, so the site is Thai-first: `<html lang="th">`, Thai headings and
+  labels, and the shell's Thai line height. Geist sets Latin text and IBM Plex Sans Thai (both via
+  `next/font`) sets Thai; `app/globals.css` puts the Thai face right after Geist in `--rs-font`.
+- `/` — eyebrow, h1 and lede, then the three newest posts and the eight subjects as cards; empty states
+  for both, and no fixed counts.
+- `/posts/` — every post, newest first, with tag chips (`?tag=`) and a result count.
+- `/posts/<slug>/` and `/arts/<id>/` — article header, the MDX body in `Prose` (a leading `# Title` is
+  dropped, later h1s become h2s, tables scroll in `TableScroll`), previous / next.
+- `/categories/` and `/about/` — the subject cards, and an about page with real contact routes only.

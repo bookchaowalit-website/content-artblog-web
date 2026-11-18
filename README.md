@@ -5,11 +5,10 @@ A Next.js blog exploring knowledge of various art styles, design techniques, and
 ## Features
 
 - **Next.js App Router** with TypeScript
-- **MDX** for writing posts with rich content
-- **Tailwind CSS** for styling
-- **Responsive images** and SEO optimization
-- **Tags** on each post (no search UI)
-- **Vercel deployment** ready
+- **MDX** posts in `content/posts/`, compiled with `next-mdx-remote`; eight subject pages in `lib/subjects.ts`
+- **Reader shell** (see `READER.md`): Thai-first pages (`<html lang="th">`), Geist + IBM Plex Sans Thai
+- **Tag chips** on `/posts/` (`?tag=`); no search UI
+- Sitemap and robots on artblog.bookchaowalit.com; `/more-projects` redirects to bookchaowalit.com
 
 ## Getting Started
 
@@ -57,13 +56,13 @@ Live at https://artblog.bookchaowalit.com (Vercel project `bookchaowalit-artblog
 
 ## Checks
 
-`npm run lint`, `npx tsc --noEmit`, `npm test` (frontmatter validation, post loader, Sentry scrubbing) and `npm run build`; CI runs the same on every push.
+`npm run lint`, `npx tsc --noEmit`, `npm test` (frontmatter validation, post loader, Sentry scrubbing, then Vitest page tests with a 90% line coverage gate) and `npm run build`; CI runs the same on every push.
 
 ## Technologies
 
-- Next.js 15, React 19
-- MDX
-- Tailwind CSS
+- Next.js 16, React 19
+- MDX (next-mdx-remote)
+- Tailwind CSS 4 (base layer only) and the Reader shell stylesheet
 - TypeScript
 - Vercel
 
