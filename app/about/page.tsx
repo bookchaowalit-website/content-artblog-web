@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { shareMetadata } from "@/lib/share";
 import Link from "next/link";
 import { ArtFrame } from "@/components/art-views";
 import { Prose, ReaderHead } from "@/components/reader-shell";
 
-export const metadata: Metadata = { title: "เกี่ยวกับ", description: "Creative Arts Knowledge คืออะไร เขียนให้ใคร และติดต่อได้ทางไหน", alternates: { canonical: "/about/" } };
+export const metadata: Metadata = shareMetadata("/about/", "เกี่ยวกับ", "Creative Arts Knowledge คืออะไร เขียนให้ใคร และติดต่อได้ทางไหน");
 
 export default function AboutPage() {
   return (

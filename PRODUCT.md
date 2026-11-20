@@ -68,6 +68,9 @@ basics of a creative field. No accounts, no comments, no search.
 What works today:
 
 - Home, reading room, post pages and subject pages render statically.
+- `?tag=` links (topic chips, and post pages opened from a topic) are rewritten in `next.config.ts` to pre-rendered
+  twins (`/posts/topic/<tag-slug>/`, `/posts/<slug>/topic/<tag-slug>/`), so no page reads `searchParams`; an unknown
+  tag falls through to the plain page. Unknown URLs get a 404 inside the site frame (`app/not-found.tsx`).
 - Every post's frontmatter is checked (title, summary, author, read time, cover image, real `YYYY-MM-DD` date,
   non-empty tags); a broken post fails the build (`lib/mdx.ts`, `tests/frontmatter.test.mjs`).
 - Errors are reported to Sentry (project `content-artblog-web`) when `NEXT_PUBLIC_SENTRY_DSN` is set, errors only and

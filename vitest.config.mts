@@ -8,6 +8,6 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["tests/**/*.test.{ts,tsx}"],
-    coverage: { provider: "v8", include: ["app/**/page.tsx", "app/sitemap.ts", "app/robots.ts", "components/**/*.tsx", "lib/render-mdx.tsx"], thresholds: { lines: 90 } },
+    coverage: { provider: "v8", include: ["app/**/page.tsx", "app/not-found.tsx", "app/sitemap.ts", "app/robots.ts", "components/**/*.tsx", "lib/render-mdx.tsx"], thresholds: { lines: 90 } },
   },
 });

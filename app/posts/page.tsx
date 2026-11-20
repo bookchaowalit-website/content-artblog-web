@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { PostsView } from "@/components/art-views";
 import { getAllPosts } from "@/lib/mdx";
+import { shareMetadata } from "@/lib/share";
 
-export const metadata: Metadata = { title: "บทความ", description: "โน้ตเรื่องการมอง การจัดวาง และการลงมือสร้างงาน", alternates: { canonical: "/posts/" } };
+export const metadata: Metadata = shareMetadata("/posts/", "บทความ", "โน้ตเรื่องการมอง การจัดวาง และการลงมือสร้างงาน");
 
-type Search = { tag?: string | string[] };
-
-export default async function PostsPage({ searchParams }: { searchParams: Promise<Search> }) {
-  const { tag } = await searchParams;
-  return <PostsView posts={await getAllPosts()} tag={(Array.isArray(tag) ? tag[0] : tag) ?? ""} />;
+// Pre-rendered. A known ?tag= is rewritten to topic/[tag] (next.config.ts); an unknown one lands here.
+export default async function PostsPage() {
+  return <PostsView posts={await getAllPosts()} />;
 }

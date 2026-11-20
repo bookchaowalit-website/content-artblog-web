@@ -8,6 +8,7 @@ import { SUBJECTS } from "@/lib/subjects";
 import Home from "@/app/page";
 import PostsPage from "@/app/posts/page";
 import PostPage, * as postRoute from "@/app/posts/[slug]/page";
+import PostInTopicPage from "@/app/posts/[slug]/topic/[tag]/page";
 import CategoriesPage from "@/app/categories/page";
 import ArtPage, * as artRoute from "@/app/arts/[category]/page";
 import AboutPage from "@/app/about/page";
@@ -43,7 +44,7 @@ describe("home", () => {
 
 describe("posts", () => {
   it("lists every real post newest first with tag chips", async () => {
-    const host = page(await PostsPage({ searchParams: Promise.resolve({}) }));
+    const host = page(await PostsPage());
     expect(host.querySelector('.rs-nav a[aria-current="page"]')?.textContent).toBe("บทความ");
     expect(host.querySelector(".rs-count")?.textContent).toBe("5 บทความ");
     expect(host.querySelector(".rs-entry-link")?.getAttribute("href")).toMatch(/^\/posts\/2025-12-10-photography\/$/);
@@ -54,8 +55,8 @@ describe("posts", () => {
     expect(texts(host, ".rs-chip")).toEqual(["ทั้งหมด3", "Color2", "Design2"]);
     expect(host.querySelector(".rs-count")?.textContent).toBe("แสดง 2 จาก 3 บทความ ในหัวข้อ “Design”");
     expect(host.querySelector('.rs-chip[aria-current="page"]')?.getAttribute("href")).toBe("/posts/?tag=Design");
-    const odd = page(await PostsPage({ searchParams: Promise.resolve({ tag: ["nope"] }) }));
-    expect(odd.querySelector(".rs-count")?.textContent).toBe("5 บทความ");
+    const odd = page(<PostsView posts={sample} tag="nope" />);
+    expect(odd.querySelector(".rs-count")?.textContent).toBe("3 บทความ");
     expect(page(<PostsView posts={[]} />).querySelector(".rs-empty h2")?.textContent).toBe("ยังไม่มีบทความ");
   });
 
@@ -106,7 +107,7 @@ describe("follow-ups", () => {
     expect(view.querySelector('.rs-pager a[rel="prev"]')).toBeNull();
     const plain = page(<PostView post={sample[1]} posts={sample} tag="Nope">body</PostView>);
     expect(plain.querySelector(".rs-back")?.getAttribute("href")).toBe("/posts/");
-    const real = page(await PostPage({ params: Promise.resolve({ slug: "2025-12-07-color-palettes" }), searchParams: Promise.resolve({ tag: ["Illustration"] }) }));
+    const real = page(await PostInTopicPage({ params: Promise.resolve({ slug: "2025-12-07-color-palettes", tag: "illustration" }) }));
     expect(real.querySelector(".rs-back")?.getAttribute("href")).toBe("/posts/?tag=Illustration");
   });
 
