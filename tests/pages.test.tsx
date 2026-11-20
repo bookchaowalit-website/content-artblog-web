@@ -144,3 +144,12 @@ describe("MDX pieces and site files", () => {
     expect(robots().sitemap).toBe("https://artblog.bookchaowalit.com/sitemap.xml");
   });
 });
+
+describe("footer privacy note", () => {
+  it("does not claim no reader data is collected while Sentry error reporting is on", async () => {
+    const { readFileSync } = await import("node:fs");
+    const views = readFileSync("components/art-views.tsx", "utf8");
+    expect(views).not.toContain("การเก็บข้อมูลผู้อ่าน");
+    expect(views).toContain("Sentry");
+  });
+});

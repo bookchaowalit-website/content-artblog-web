@@ -28,7 +28,7 @@ export function ArtFrame({ current, children }: { current: Section; children: Re
         ]}
       />
       <main id="main" className="rs-main">{children}</main>
-      <ReaderFoot source={SOURCE} note="บทความและหน้าสาขาเขียนเป็นไฟล์ในรีโพสาธารณะ ไม่มีระบบสมาชิกหรือการเก็บข้อมูลผู้อ่าน" />
+      <ReaderFoot source={SOURCE} note="บทความและหน้าสาขาเขียนเป็นไฟล์ในรีโพสาธารณะ ไม่มีระบบสมาชิก แต่หน้าเว็บส่งรายงานข้อผิดพลาดทางเทคนิคไปที่ Sentry" />
     </Reader>
   );
 }
