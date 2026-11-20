@@ -75,3 +75,15 @@ describe("404", () => {
     expect(notFoundMetadata.robots).toEqual({ index: false });
   });
 });
+
+describe("every topic chip has a route", () => {
+  it("each tag in content gets its own pre-rendered route (a Thai-only or slug-clashing tag would show a chip that cannot filter)", async () => {
+    const { getAllPosts } = await import("@/lib/mdx");
+    const { tagRoutes } = await import("@/lib/tag-routes");
+    const tags = [...new Set((await getAllPosts()).flatMap((post) => post.tags))];
+    const routed = new Set((await tagRoutes()).map((route) => route.tag));
+    expect(tags.length).toBeGreaterThan(0);
+    // Give such a tag an ASCII name, or rename one of the clashing pair.
+    expect(tags.filter((tag) => !routed.has(tag))).toEqual([]);
+  });
+});
