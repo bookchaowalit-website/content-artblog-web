@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, IBM_Plex_Sans_Thai } from "next/font/google";
 import { SITE } from "@/components/art-views";
+import { SOCIAL_CARD } from "@/lib/share";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   description,
   metadataBase: new URL(SITE),
   alternates: { canonical: "/" },
-  openGraph: { type: "website", locale: "th_TH", url: SITE, title, description, siteName: "Creative Arts Knowledge" },
-  twitter: { card: "summary", title, description },
+  openGraph: { type: "website", locale: "th_TH", url: SITE, title, description, siteName: "Creative Arts Knowledge", ...SOCIAL_CARD.openGraph },
+  twitter: { title, description, ...SOCIAL_CARD.twitter },
   robots: { index: true, follow: true },
 };
 
